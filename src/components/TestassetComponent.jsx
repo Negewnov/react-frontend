@@ -118,6 +118,13 @@ class TestassetComponent extends Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+
+        console.log('I was triggered during componentDidUpdate' + this.state.action);
+        console.log('I was triggered during componentDidUpdate' + this.props.location.pathname);
+        console.log('I was triggered during componentDidUpdate' + prevProps.location.pathname);
+    }
+
     render() {
         let content;
         if (this.state.action === 'viewall') {
