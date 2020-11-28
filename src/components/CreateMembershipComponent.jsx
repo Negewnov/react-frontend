@@ -8,9 +8,13 @@ class CreateMembershipComponent extends Component {
         this.state = {
             // step 2
             id: this.props.match.params.id,
-            membershipName: ''
+            membershipName: '',
+            personId: '',
+            groupId: ''
         }
         this.changeMembershipNameHandler = this.changeMembershipNameHandler.bind(this);
+        this.changePersonIdHandler = this.changePersonIdHandler.bind(this);
+        this.changeGroupIdHandler = this.changeGroupIdHandler.bind(this);
         this.saveOrUpdateMembership = this.saveOrUpdateMembership.bind(this);
     }
 
@@ -23,14 +27,19 @@ class CreateMembershipComponent extends Component {
         }else{
             MembershipService.getMembershipById(this.state.id).then( (res) =>{
                 let membership = res.data;
-                this.setState({membershipName: membership.membershipName
+                this.setState({membershipName: membership.membershipName,
+                    personId: membership.personId,
+                    groupId: membership.groupId
                 });
             });
         }        
     }
+
     saveOrUpdateMembership = (e) => {
         e.preventDefault();
-        let membership = {membershipName: this.state.membershipName};
+        let membership = {membershipName: this.state.membershipName,
+            personId: this.state.personId,
+            groupId: this.state.groupId};
         console.log('membership => ' + JSON.stringify(membership));
 
         // step 5
@@ -47,6 +56,14 @@ class CreateMembershipComponent extends Component {
     
     changeMembershipNameHandler= (event) => {
         this.setState({membershipName: event.target.value});
+    }
+
+    changePersonIdHandler= (event) => {
+        this.setState({personId: event.target.value});
+    }
+
+    changeGroupIdHandler= (event) => {
+        this.setState({groupId: event.target.value});
     }
 
     cancel(){
@@ -76,6 +93,16 @@ class CreateMembershipComponent extends Component {
                                             <label> Membership Name: </label>
                                             <input placeholder="Membership Name" name="membershipName" className="form-control"
                                                 value={this.state.membershipName} onChange={this.changeMembershipNameHandler}/>
+                                        </div>
+                                        <div className = "form-group">
+                                            <label> Person Id: </label>
+                                            <input placeholder="Person Id" name="personId" className="form-control"
+                                                value={this.state.personId} onChange={this.changePersonIdHandler}/>
+                                        </div>
+                                        <div className = "form-group">
+                                            <label> Group Id: </label>
+                                            <input placeholder="Group Id" name="groupId" className="form-control"
+                                                value={this.state.groupId} onChange={this.changeGroupIdHandler}/>
                                         </div>
 
                                         <button className="btn btn-success" onClick={this.saveOrUpdateMembership}>Save</button>

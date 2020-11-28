@@ -49,6 +49,8 @@ class ListMembershipComponent extends Component {
                             <thead>
                                 <tr>
                                     <th> Membership Name</th>
+                                    <th> Person ID</th>
+                                    <th> Group ID</th>
                                     <th> Actions</th>
                                 </tr>
                             </thead>
@@ -58,6 +60,8 @@ class ListMembershipComponent extends Component {
                                         membership => 
                                         <tr key = {membership.id}>
                                              <td> { membership.membershipName} </td>
+                                             <td> { membership.personId} </td>
+                                             <td> { membership.groupId} </td>
                                              <td>
                                                  <button onClick={ () => this.editMembership(membership.id)} className="btn btn-info">Update </button>
                                                  <button style={{marginLeft: "10px"}} onClick={ () => this.deleteMembership(membership.id)} className="btn btn-danger">Delete </button>
