@@ -5,6 +5,8 @@ class TestassetComponent extends Component {
     constructor(props) {
         super(props)
 
+        console.log('I was triggered during constructor' + this.props.match.params.action);
+
         this.state = {
             action: this.props.match.params.action,
             id: this.props.match.params.id,
@@ -34,11 +36,11 @@ class TestassetComponent extends Component {
         // step 5
         if(this.state.id === '_add'){
             TestassetService.createTestasset(testasset).then(res =>{
-                this.props.history.push('/testassets');
+                this.props.history.push('/testassets/viewall');
             });
         }else{
             TestassetService.updateTestasset(testasset, this.state.id).then( res => {
-                this.props.history.push('/testassets');
+                this.props.history.push('/testassets/viewall');
             });
         }
     }
@@ -57,6 +59,7 @@ class TestassetComponent extends Component {
     }
 
     addTestasset(){
+        console.log('I was triggered during add' + this.state.action);
         this.props.history.push('/testassets/add/_add');
     }
 
@@ -77,7 +80,7 @@ class TestassetComponent extends Component {
     }
 
     cancel(){
-        this.props.history.push('/testassets');
+        this.props.history.push('/testassets/viewall');
     }
 
     getTitle(){
@@ -88,13 +91,26 @@ class TestassetComponent extends Component {
         }
     }
     componentDidMount(){
+        console.log('I was triggered during componentDidMount' + this.state.action)
         console.log('I was triggered during componentDidMount' + this.props.match.params.action)
-        console.log('I was triggered during componentDidMount testassetid: ' + this.props.match.params.id)
+        console.log('I was triggered during componentDidMount id: ' + this.props.match.params.id)
+        console.log('I was triggered during componentDidMount id: ' + this.state.id)
 
-        if (this.state.action === 'view' || this.state.action === 'add') {
+        if (this.state.action === 'view') {
             TestassetService.getTestassetById(this.state.id).then( res => {
                 this.setState({ testasset: res.data});
             })
+        } else if(this.state.action === 'add' && this.state.id === '_add'){
+            return
+        } else if(this.state.action === 'add'){
+            TestassetService.getTestassetById(this.state.id).then( (res) =>{
+                let testasset = res.data;
+                this.setState({firstName: testasset.firstName,
+                    lastName: testasset.lastName,
+                    phoneNumber: testasset.phoneNumber,
+                    emailId : testasset.emailId
+                });
+            });
         } else {
             TestassetService.getTestassets().then((res) => {
                 this.setState({ testassets: res.data});

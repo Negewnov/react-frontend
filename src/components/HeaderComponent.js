@@ -22,6 +22,8 @@ class HeaderComponent extends Component {
                         Persons
                 </Link> - <Link to="/testassets/viewall" >
                         Testassets
+                </Link> - <Link to="/testassets/add/_add" >
+                        Add Testasset
                 </Link> - <Link to="/groups" >
                         Groups
                 </Link> - <Link to="/colours" >
