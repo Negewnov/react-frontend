@@ -162,6 +162,7 @@ class TestassetComponent extends Component {
                                 testasset =>
                                     <tr key={testasset.id}>
                                         <td> {testasset.firstName} </td>
+                                        <td> {testasset.lastName} </td>
                                         <td> {testasset.phoneNumber}</td>
                                         <td> {testasset.emailId}</td>
                                         <td>
@@ -175,10 +176,6 @@ class TestassetComponent extends Component {
                                             <button style={{marginLeft: "10px"}}
                                                     onClick={() => this.viewTestasset(testasset.id)}
                                                     className="btn btn-info">View
-                                            </button>
-                                            <button style={{marginLeft: "10px"}}
-                                                    onClick={() => this.viewMemberships(testasset.id)}
-                                                    className="btn btn-info">Member
                                             </button>
                                         </td>
                                     </tr>
