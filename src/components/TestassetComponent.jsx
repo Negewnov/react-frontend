@@ -127,6 +127,7 @@ class TestassetComponent extends Component {
         console.log('I was triggered during componentDidUpdate ID ' + this.props.match.params.id);
         let x = this.props.location.pathname;
         if(prevProps.location.pathname !== x) {
+            //TODO setstate verwenden
             this.state = {
                 action: this.props.match.params.action,
                 id: this.props.match.params.id
