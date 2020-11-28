@@ -1,13 +1,19 @@
 import React, { Component } from 'react'
 import MembershipService from '../services/MembershipService'
+import PersonService from "../services/PersonService";
+import GroupService from "../services/GroupService";
 
 class ListMembershipComponent extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-                memberships: []
+                memberships: [],
+                persons: [],
+                groups: []
         }
+        this.getGroupName = this.getGroupName.bind(this);
+        this.getPersonName = this.getPersonName.bind(this);
         this.addMembership = this.addMembership.bind(this);
         this.editMembership = this.editMembership.bind(this);
         this.deleteMembership = this.deleteMembership.bind(this);
@@ -26,6 +32,14 @@ class ListMembershipComponent extends Component {
     }
 
     componentDidMount(){
+        PersonService.getPersons().then((res) => {
+            this.setState({ persons: res.data});
+        });
+
+        GroupService.getGroups().then((res) => {
+            this.setState({ groups: res.data});
+        });
+
         MembershipService.getMemberships().then((res) => {
             this.setState({ memberships: res.data});
         });
@@ -33,6 +47,22 @@ class ListMembershipComponent extends Component {
 
     addMembership(){
         this.props.history.push('/add-membership/_add');
+    }
+
+    getPersonName(personId) {
+        let numberedId = personId * 1;
+        let persons =
+            this.state.persons.filter(person => person.id === numberedId).map( person => ''.concat(person.firstName,' ',person.lastName));
+
+        return persons;
+    }
+
+    getGroupName(groupId) {
+        let numberedId = groupId * 1;
+        let groups =
+            this.state.groups.filter(group => group.id === numberedId).map( group => group.groupName);
+
+        return groups;
     }
 
     render() {
@@ -49,8 +79,8 @@ class ListMembershipComponent extends Component {
                             <thead>
                                 <tr>
                                     <th> Membership Name</th>
-                                    <th> Person ID</th>
-                                    <th> Group ID</th>
+                                    <th> Person Name</th>
+                                    <th> Group Name</th>
                                     <th> Actions</th>
                                 </tr>
                             </thead>
@@ -60,12 +90,11 @@ class ListMembershipComponent extends Component {
                                         membership => 
                                         <tr key = {membership.id}>
                                              <td> { membership.membershipName} </td>
-                                             <td> { membership.personId} </td>
-                                             <td> { membership.groupId} </td>
+                                            <td> { this.getPersonName(membership.personId)} </td>
+                                            <td> { this.getGroupName(membership.groupId)} </td>
                                              <td>
                                                  <button onClick={ () => this.editMembership(membership.id)} className="btn btn-info">Update </button>
                                                  <button style={{marginLeft: "10px"}} onClick={ () => this.deleteMembership(membership.id)} className="btn btn-danger">Delete </button>
-                                                 <button style={{marginLeft: "10px"}} onClick={ () => this.viewMembership(membership.id)} className="btn btn-info">View </button>
                                              </td>
                                         </tr>
                                     )

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import MembershipService from '../services/MembershipService';
+import PersonService from "../services/PersonService";
+import GroupService from "../services/GroupService";
 
 class CreateMembershipComponent extends Component {
     constructor(props) {
@@ -10,7 +12,9 @@ class CreateMembershipComponent extends Component {
             id: this.props.match.params.id,
             membershipName: '',
             personId: '',
-            groupId: ''
+            groupId: '',
+            persons: [],
+            groups: []
         }
         this.changeMembershipNameHandler = this.changeMembershipNameHandler.bind(this);
         this.changePersonIdHandler = this.changePersonIdHandler.bind(this);
@@ -20,6 +24,15 @@ class CreateMembershipComponent extends Component {
 
     // step 3
     componentDidMount(){
+
+        PersonService.getPersons().then((res) => {
+            this.setState({ persons: res.data});
+        });
+
+        GroupService.getGroups().then((res) => {
+            this.setState({ groups: res.data});
+        });
+
 
         // step 4
         if(this.state.id === '_add'){
@@ -94,16 +107,54 @@ class CreateMembershipComponent extends Component {
                                             <input placeholder="Membership Name" name="membershipName" className="form-control"
                                                 value={this.state.membershipName} onChange={this.changeMembershipNameHandler}/>
                                         </div>
+
+
                                         <div className = "form-group">
                                             <label> Person Id: </label>
-                                            <input placeholder="Person Id" name="personId" className="form-control"
-                                                value={this.state.personId} onChange={this.changePersonIdHandler}/>
+                                            <div>
+                                                <select className="form-control"
+                                                        name="personId"
+                                                        value={this.state.personId}
+                                                        onChange={this.changePersonIdHandler}
+
+                                                >
+                                                    {this.state.persons.map(
+                                                        person =>
+                                                            <option
+                                                                key={person.id}
+                                                                value={person.id}
+                                                            >
+                                                                {''.concat(person.firstName,' ',person.lastName)}
+                                                            </option>
+                                                    )
+                                                    }
+                                                </select>
+                                            </div>
                                         </div>
+
                                         <div className = "form-group">
                                             <label> Group Id: </label>
-                                            <input placeholder="Group Id" name="groupId" className="form-control"
-                                                value={this.state.groupId} onChange={this.changeGroupIdHandler}/>
+                                            <div>
+                                                <select className="form-control"
+                                                        name="groupId"
+                                                        value={this.state.groupId}
+                                                        onChange={this.changeGroupIdHandler}
+
+                                                >
+                                                    {this.state.groups.map(
+                                                        group =>
+                                                            <option
+                                                                key={group.id}
+                                                                value={group.id}
+                                                            >
+                                                                {group.groupName}
+                                                            </option>
+                                                    )
+                                                    }
+                                                </select>
+                                            </div>
                                         </div>
+
 
                                         <button className="btn btn-success" onClick={this.saveOrUpdateMembership}>Save</button>
                                         <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>Cancel</button>
