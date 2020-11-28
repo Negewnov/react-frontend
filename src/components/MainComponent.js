@@ -6,16 +6,20 @@ import {
 import ListPersonComponent from "./ListPersonComponent";
 import CreatePersonComponent from "./CreatePersonComponent";
 import ViewPersonComponent from "./ViewPersonComponent";
-import ListGroupComponent from "./ListGroupComponent";
 
 import TestassetComponent from "./TestassetComponent";
 
+import ListGroupComponent from "./ListGroupComponent";
 import CreateGroupComponent from "./CreateGroupComponent";
 import ViewGroupComponent from "./ViewGroupComponent";
 
 import ListColourComponent from "./ListColourComponent";
 import CreateColourComponent from "./CreateColourComponent";
 import ViewColourComponent from "./ViewColourComponent";
+
+import ViewMembershipComponent from "./ViewMembershipComponent";
+import CreateMembershipComponent from "./CreateMembershipComponent";
+import ListMembershipComponent from "./ListMembershipComponent";
 
 class MainComponent extends Component {
     constructor(props) {
@@ -44,6 +48,10 @@ class MainComponent extends Component {
                             <Route path = "/groups" component = {ListGroupComponent}></Route>
                             <Route path = "/add-group/:id" component = {CreateGroupComponent}></Route>
                             <Route path = "/view-group/:id" component = {ViewGroupComponent}></Route>
+
+                            <Route path = "/memberships" component = {ListMembershipComponent}></Route>
+                            <Route path = "/add-membership/:id" component = {CreateMembershipComponent}></Route>
+                            <Route path = "/view-membership/:id" component = {ViewMembershipComponent}></Route>
 
                             <Route path = "/colours" component = {ListColourComponent}></Route>
                             <Route path = "/add-colour/:id" component = {CreateColourComponent}></Route>

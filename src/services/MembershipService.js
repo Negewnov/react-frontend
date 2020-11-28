@@ -8,12 +8,12 @@ class MembershipService {
         return axios.get(MEMBERSHIP_API_BASE_URL);
     }
 
-    createMembership(personId,groupID){
-        return axios.post(MEMBERSHIP_API_BASE_URL + '/' + personId, groupID);
+    createMembership(membership){
+        return axios.post(MEMBERSHIP_API_BASE_URL, membership);
     }
 
-    getMembershipsByPersonId(personId){
-        return axios.get(MEMBERSHIP_API_BASE_URL + '/' + personId);
+    getMembershipById(membershipId){
+        return axios.get(MEMBERSHIP_API_BASE_URL + '/' + membershipId);
     }
 
     updateMembership(membership, membershipId){

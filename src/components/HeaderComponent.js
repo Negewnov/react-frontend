@@ -20,6 +20,8 @@ class HeaderComponent extends Component {
                         Home
                 </Link> - <Link to="/persons" >
                         Persons
+                </Link> - <Link to="/memberships" >
+                        Memberships
                 </Link> - <Link to="/testassets/viewall" >
                         Testassets
                 </Link> - <Link to="/testassets/add/_add" >
