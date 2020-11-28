@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import {
-    BrowserRouter as Router,
-    Link,
     Route,
     Switch,
 } from 'react-router-dom';
 import ListPersonComponent from "./ListPersonComponent";
 import CreatePersonComponent from "./CreatePersonComponent";
 import ViewPersonComponent from "./ViewPersonComponent";
-
 import ListGroupComponent from "./ListGroupComponent";
+
+import TestassetComponent from "./TestassetComponent";
+
 import CreateGroupComponent from "./CreateGroupComponent";
 import ViewGroupComponent from "./ViewGroupComponent";
 
@@ -36,6 +36,10 @@ class MainComponent extends Component {
                             <Route path = "/persons" exact component = {ListPersonComponent}></Route>
                             <Route path = "/add-person/:id" component = {CreatePersonComponent}></Route>
                             <Route path = "/view-person/:id" component = {ViewPersonComponent}></Route>
+
+                            <Route path = "/testassets" exact component = {TestassetComponent}></Route>
+                            <Route path = "/testassets/:action" exact component = {TestassetComponent}></Route>
+                            <Route path = "/testassets/:action/:id" exact component = {TestassetComponent}></Route>
 
                             <Route path = "/groups" component = {ListGroupComponent}></Route>
                             <Route path = "/add-group/:id" component = {CreateGroupComponent}></Route>

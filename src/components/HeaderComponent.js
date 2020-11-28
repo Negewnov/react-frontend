@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import {
-    BrowserRouter as Router,
-    Link,
-    Route,
-    Switch,
+    Link
 } from 'react-router-dom';
 
 class HeaderComponent extends Component {
@@ -23,6 +20,8 @@ class HeaderComponent extends Component {
                         Home
                 </Link> - <Link to="/persons" >
                         Persons
+                </Link> - <Link to="/testassets/viewall" >
+                        Testassets
                 </Link> - <Link to="/groups" >
                         Groups
                 </Link> - <Link to="/colours" >
