@@ -123,6 +123,15 @@ class TestassetComponent extends Component {
         console.log('I was triggered during componentDidUpdate' + this.state.action);
         console.log('I was triggered during componentDidUpdate' + this.props.location.pathname);
         console.log('I was triggered during componentDidUpdate' + prevProps.location.pathname);
+        console.log('I was triggered during componentDidUpdate ACTION ' + this.props.match.params.action);
+        console.log('I was triggered during componentDidUpdate ID ' + this.props.match.params.id);
+        let x = this.props.location.pathname;
+        if(prevProps.location.pathname !== x) {
+            this.state = {
+                action: this.props.match.params.action,
+                id: this.props.match.params.id
+            }
+        }
     }
 
     render() {
