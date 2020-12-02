@@ -1,11 +1,19 @@
 import React, { Component } from 'react'
 import TestassetService from '../services/TestassetService';
 
+/*
+
+TODO: componentDidUpdate and ... Mount should use same methods with same tasks.
+      is is possible, that setState is complete instead of using props?
+
+ */
+
 class TestassetComponent extends Component {
     constructor(props) {
         super(props)
 
         console.log('I was triggered during constructor' + this.props.match.params.action);
+
 
         this.state = {
             action: this.props.match.params.action,
@@ -18,6 +26,9 @@ class TestassetComponent extends Component {
             emailId: ''
 
         }
+
+
+        this.updateTestassets = this.updateTestassets.bind(this);
         this.addTestasset = this.addTestasset.bind(this);
         this.editTestasset = this.editTestasset.bind(this);
         this.deleteTestasset = this.deleteTestasset.bind(this);
@@ -55,6 +66,7 @@ class TestassetComponent extends Component {
     }
 
     editTestasset(id){
+        console.log('I was triggered during edittestasst ' + id);
         this.props.history.push(`/testassets/add/${id}`);
     }
 
@@ -92,8 +104,6 @@ class TestassetComponent extends Component {
     }
     componentDidMount(){
         console.log('I was triggered during componentDidMount' + this.state.action)
-        console.log('I was triggered during componentDidMount' + this.props.match.params.action)
-        console.log('I was triggered during componentDidMount id: ' + this.props.match.params.id)
         console.log('I was triggered during componentDidMount id: ' + this.state.id)
 
         if (this.state.action === 'view') {
@@ -112,30 +122,56 @@ class TestassetComponent extends Component {
                 });
             });
         } else {
-            TestassetService.getTestassets().then((res) => {
-                this.setState({ testassets: res.data});
-            });
+            this.updateTestassets()
         }
+    }
+
+    updateTestassets(){
+        console.log('I was triggered during componentDidMount IKKE' + this.state.action)
+        TestassetService.getTestassets().then((res) => {
+            this.setState({ testassets: res.data});
+        });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
         console.log('I was triggered during componentDidUpdate' + this.state.action);
-        console.log('I was triggered during componentDidUpdate' + this.props.location.pathname);
-        console.log('I was triggered during componentDidUpdate' + prevProps.location.pathname);
         console.log('I was triggered during componentDidUpdate ACTION ' + this.props.match.params.action);
-        console.log('I was triggered during componentDidUpdate ID ' + this.props.match.params.id);
+
         let x = this.props.location.pathname;
         if(prevProps.location.pathname !== x) {
             //TODO setstate verwenden
-            this.state = {
+
+            this.setState({
                 action: this.props.match.params.action,
-                id: this.props.match.params.id
+                id: this.props.match.params.id,
+            })
+
+            if (this.props.match.params.action === 'view') {
+                TestassetService.getTestassetById(this.props.match.params.id).then( res => {
+                    this.setState({ testasset: res.data});
+                })
+            } else if(this.props.match.params.action === 'add' && this.props.match.params.id === '_add'){
+                return
+            } else if(this.props.match.params.action === 'add'){
+                TestassetService.getTestassetById(this.props.match.params.id).then( (res) =>{
+                    let testasset = res.data;
+                    this.setState({firstName: testasset.firstName,
+                        lastName: testasset.lastName,
+                        phoneNumber: testasset.phoneNumber,
+                        emailId : testasset.emailId
+                    });
+                });
+            } else {
+                this.updateTestassets()
             }
+            console.log('I was triggered during componentDidUpdate and worke ');
         }
     }
 
     render() {
+
+        console.log('I was triggered during render x ' + this.state.action);
         let content;
         if (this.state.action === 'viewall') {
             content=
