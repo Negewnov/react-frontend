@@ -176,7 +176,7 @@ class TestassetComponent extends Component {
         if (this.state.action === 'viewall') {
             content=
                 <div>
-                <h2 className="text-center">Testassets List {this.state.action}</h2>
+                <h2 className="text-center">Testassets List - Single Component Test</h2>
                 <div className="row">
                     <button className="btn btn-primary" onClick={this.addTestasset}> Add Testasset</button>
                 </div>
